@@ -1,0 +1,15 @@
+package core.daos.impl;
+
+import org.springframework.stereotype.Repository;
+
+import core.daos.MeetingEventDao;
+import core.entities.MeetingEvent;
+
+
+@Repository
+public class MeetingEventDaoImpl extends AbstractJpaDAO<MeetingEvent> implements MeetingEventDao {
+	public MeetingEventDaoImpl() {
+		super();
+		setClazz(MeetingEvent.class);
+	}
+}

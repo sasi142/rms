@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="sbt: biz.source_code:base64coder:2010-12-19:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/biz/source_code/base64coder/2010-12-19/base64coder-2010-12-19.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/biz/source_code/base64coder/2010-12-19/base64coder-2010-12-19-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/biz/source_code/base64coder/2010-12-19/base64coder-2010-12-19-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

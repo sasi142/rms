@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<context:property-placeholder location="file:${CONFIG_DIR}/rms_env.properties" />
+	<!-- <context:property-placeholder location="file:D:/AmazonSvn/OneWorkbook/trunk/rms/conf/props/rms_env.properties" /> -->
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="core.entities" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.proc.param_null_passing">true</prop>
+				<prop key="hibernate.id.new_generator_mappings">false</prop>
+				<prop key="spring.jpa.hibernate.use-new-id-generator-mappings">false</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.user}" />
+		<property name="password" value="${jdbc.pass}" />
+		<property name="timeBetweenEvictionRunsMillis" value="${connectionpool.timeBetweenEvictionRunsMillis}" />
+		<property name="numTestsPerEvictionRun" value="6" />
+		<property name="minEvictableIdleTimeMillis" value="${connectionpool.minEvictableIdleTimeMillis}" />
+		<property name="maxTotal" value="${connectionpool.maxActive}" />
+		<property name="initialSize" value="${connectionpool.initialSize}" />
+		<property name="maxIdle" value="${connectionpool.maxIdle}" />
+		<property name="minIdle" value="${connectionpool.minIdle}" />
+		<property name="maxWaitMillis" value="${connectionpool.maxWait}" />
+		<property name="removeAbandonedOnBorrow" value="true" />	
+		<property name="removeAbandonedTimeout" value="${connectionpool.removeAbandonedTimeout}"/>	
+		<property name="validationQuery" value="SELECT 1"/>			
+	</bean>
+    
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<tx:annotation-driven />
+
+	<bean id="persistenceExceptionTranslationPostProcessor"
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+
+</beans>

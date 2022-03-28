@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="sbt: org.sedis:sedis_2.10.0:1.1.1:jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/org/sedis/sedis_2.10.0/1.1.1/sedis_2.10.0-1.1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,213 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>$Title|Follow</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="/web2/assets/images/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+    <link href="/web2/assets/styles/followPublic.css" type="text/css" rel="stylesheet" />
+    <link href="/web2/assets/styles/memoEditor.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="/web2/assets/scripts/jquery-3.2.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+
+<script type="text/javascript">
+         var a = document.createElement("a");
+         var downloadURL;
+         var filename;
+         var previewUuid;
+         var previewFilename;
+
+    $(document).ready(function () {
+
+        $("#shareShow").click(function () {
+            $("#share-buttons").toggle();
+        });
+         
+        $(".iconDownloadInline").on("click", function(){
+        let uuid = $(this).parent().parent().data('url');
+        window.downloadURL = '/owb/attachments/v2/Memo/' + uuid;
+        window.filename = $(this).parent().parent().data('filename');
+          window.downloadImageFunction();
+        });
+    
+        $(".fmDownloadIcon").on("click", function(){
+        let uuid =$(this).data('url');
+        window.downloadURL = '/owb/attachments/v2/Memo/' + uuid;
+        window.filename = $(this).data('filename');
+          window.downloadImageFunction();
+        });
+        
+        $(".fmFileIcon").on("click", function(){
+        let uuid =$(this).data('url');  
+        window.downloadURL = '/owb/attachments/v2/Memo/' + uuid;
+        window.filename = $(this).data('filename');
+        $("#previewImg").attr('src',window.downloadURL);
+        $("#popupOverlay").show();
+        });
+     });
+
+        function downloadAttachment(uuid, filename, id, filetype) {
+           
+        }
+
+        function downloadImage() {
+            this.downloadImageFunction();
+            this.closePopup();
+        }
+
+        function closePopup() {
+            $("#popupOverlay").removeAttr("style").hide();
+        }
+
+        function downloadImageFunction() {
+            this.a.href = this.downloadURL;
+            this.a.setAttribute("download", this.filename);
+            this.a.click();
+        }
+
+</script>	
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-NJ4QBGH');</script>
+    <!-- End Google Tag Manager -->
+
+
+    <!-- Description -->
+    #if ($Description)
+    <meta name="description" content="$Description" />
+    <meta itemprop="description" content="$Description" />
+    #end
+    #if ($ChannelName)
+    <meta itemprop="name" content="$ChannelName | Follow" />
+    #end
+    #if ($ChannelCategory)
+    <meta itemprop="applicationCategory" content="$ChannelCategory">
+	#end
+    <!-- Scehma-->
+    
+    #if ($LogoImageURL)
+    <meta itemprop="image" content="$LogoImageURL" />
+    #end
+   
+    #if ($ScreenshotURL)
+    	<meta itemprop="screenshot" content="$ScreenshotURL" />
+    #end
+    
+    #if ($Title)
+    <meta property="author" content="$Title | Follow Page" />
+	#end
+
+    <!--Webmaster-These are fixed for all of the public channel pages. Disclaimer - www.follow.co this may change  -->
+    <meta name="google-site-verification" content="DndRwgWI9kHkiCXL0IruLkkGTwXyLa69hLHALJoEAzs" />
+    <meta name="msvalidate.01" content="386FDB312A0A28080941E976DF667F81" />
+
+    <!--FB fixed-->
+    #if ($FollowMessageUrl)
+    <meta property="og:url" content="$FollowMessageUrl">
+    #end
+    #if($LogoImageURL)
+    <meta property="og:image" content="$LogoImageURL" />
+    #end
+    #if ($Description)
+    <meta property="og:description" content="$Description" />
+    #end
+    <meta property="og:type" content="Follow Page" />
+    #if ($ChannelName)
+    <meta property="og:title" content="$ChannelName | Follow" />
+	#end
+	
+    <!--Twitter fixed-->
+     #if ($ChannelName)
+    <meta name="twitter:title" content="$ChannelName | Follow">
+    #end
+    #if ($Description)
+    <meta name="twitter:description" content="$Description" />
+    #end
+    #if($LogoImageURL)
+    <meta name="twitter:image" content="$LogoImageURL" />
+    #end
+    #if ($FollowMessageUrl)
+    <meta name="twitter:url" content="$FollowMessageUrl">
+    #end
+    <meta name="twitter:app:name:iphone" content="Follow Page" />
+    <meta name="twitter:card" content="Follow Page">
+
+</head>
+
+<body>
+	
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ4QBGH"
+	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
+	
+    <div class="mainContainer">
+        <div class="msgDetails">
+            <div class="mainContent">
+                <div class="mainContentHeading">
+                <div class="logo" onclick="window.open('$channelPublicUrl')">
+               	 <img alt="$ChannelName" src="$LogoURL"> 
+               	</div>
+                	#if ($MessageHeading)
+                    <h1>$MessageHeading</h1>
+                    #end
+                    #if ($CompanyName)
+                    <h2 class="companyName">$ChannelName</h2>
+                    #end
+                    #if ($MessageDateTime)
+                    <div class="msgDate">$MessageDateTime</div>
+                    #end
+                    <div class="iconContainer">
+                        <div class="sharethis-inline-share-buttons st-center  st-inline-share-buttons st-animated" id="st-1"><div class="st-btn st-first       st-remove-label" data-network="linkedin" style="display: inline-block;">
+                        <img src="https://platform-cdn.sharethis.com/img/linkedin.svg">
+  
+                        </div><div class="st-btn       st-remove-label" data-network="twitter" style="display: inline-block;">
+                        <img src="https://platform-cdn.sharethis.com/img/twitter.svg">
+  
+                        </div><div class="st-btn       st-remove-label" data-network="pinterest" style="display: inline-block;">
+                        <img src="https://platform-cdn.sharethis.com/img/pinterest.svg">
+  
+                        </div><div class="st-btn       st-remove-label" data-network="facebook" style="display: inline-block;">
+                        <img src="https://platform-cdn.sharethis.com/img/facebook.svg">
+  
+                        </div><div class="st-btn st-last       st-remove-label" data-network="whatsapp" style="display: none;">
+                        <img src="https://platform-cdn.sharethis.com/img/whatsapp.svg">
+  
+                        </div></div>
+                    </div>
+                </div>
+                <div class="mainContentBox">
+                	<div class="mainContentText">
+                	#if ($messageBody)
+                    	$messageBody
+                    #end
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="popupOverlay" class="popupOverlay" style="display: none;">
+        <div class="popupContainer">
+            <div id="previewDialogueBox" class="popupContainerInner">
+                <div class="popupPhoto">
+                    <div id="previewImageDiv" class="popupPhotoInner">
+                        <img id="previewImg" alt="previewImg">
+                    </div>
+                </div>
+                <div class="popupBottom">
+                    <div class="centeralign-button">
+                        <button class="button buttongrey" onclick="closePopup();">Cancel</button>
+                        <button class="button buttonblue" onclick="downloadImage();">Download</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+## Basic properties for custom field
+
+##ALL KEYS TO BE IN sorted order (alphabetically)
+
+#input meta type list
+Input= Amount_INR-Amount (INR),Amount_USD-Amount (USD),Decimal-Decimal,Integer-Integer (16 digits),String-String (256 characters)
+
+#selection meta type list
+Select= Billed-Billed,Billing Started-Billing Started,Closed-Closed,Cold-Cold,Hot-Hot,In Development-In Development,In Discussion-In Discussion,In Testing-In Testing,Live-Live,Not Interested-Not Interested,On Hold-On Hold,Open-Open,Over-Over,Paused-Paused,Payment Collected-Payment Collected,Pending-Pending,Prospect-Prospect,Released-Released,Signed-Signed,Trial-Trial
+
+#preset meta type list ##ALL KEYS TO BE IN lower case
+Preset= browser-Browser,campaignType-Campaign Type,day-Day,date-Date,department-Department,indiaCityList-Indian Cities,indiaTaxList-India Tax List,industry-Industry,month-Month,numbers-Numbers,operatingSystem-Operating System,timeoftheday-Time of the Day,topindiawebsites-Top 100 India Websites,usCityList-US Cities,year-Year 

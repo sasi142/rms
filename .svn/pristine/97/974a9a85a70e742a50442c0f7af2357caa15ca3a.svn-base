@@ -1,0 +1,29 @@
+@(username: String)
+
+@main(username) {
+    
+    <div class="page-header">
+        <h1>You are chatting as @username</h1>
+    </div>
+    
+    <div id="onError" class="alert-message error">
+        <p>
+            <strong>Oops!</strong> <span></span>
+        </p>
+    </div>
+    
+    <div id="onChat" class="row">
+        <div class="span10" id="main">
+            <div id="messages"></div>
+            <textarea id="talk"></textarea>
+        </div>
+        <br/><br/>
+        From: <input id="from" type="text" value="@username"/>
+        To: <input id="recipients" type="text" />
+        Group : <input id="group" type="text" /><br/><br/>
+        <textarea id="JsonMessage" style="width:800px;"></textarea><br/><br/><button id="sendMsgBtn" title="SendJsonMessage" style="height:40px;">SendJsonMessage</button>
+    </div>
+    
+    <script type="text/javascript" charset="utf-8" src="@routes.MainController.chatRoomJs(username)"></script>
+    
+}

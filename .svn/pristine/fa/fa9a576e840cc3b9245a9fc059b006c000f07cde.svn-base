@@ -1,0 +1,45 @@
+environment=uat
+owb.internal=http://10.22.99.115:8081/owb
+main.domain=videokycdev.axisb.com
+ims.internal=http://10.22.99.115:3335/ims
+main.url=https://${main.domain}
+
+# ims server info
+ims.http.host=10.22.99.115
+ims.http.port=3335
+ims.http.scheme=http
+
+# jdbc.X
+jdbc.url=jdbc:mysql://videokycuatdb.cvvdtro614hv.ap-south-1.rds.amazonaws.com:3306/prod_rms?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&noAccessToProcedureBodies=true&useSSL=false
+jdbc.user={<ENC>}49pdP2EOQziAqPNeyoRmEifENLS_{</ENC>}
+jdbc.pass={<ENC>}1ddcMmm9XL2dUJcX2qxZk_j9wQtSrJrsaSisCN2bmsPmdA{</ENC>}
+
+# Redis Cache Server
+redis.server.master=videokycdevredis.6kudtz.ng.0001.aps1.cache.amazonaws.com:6379
+redis.ims.db.index=0
+redis.rms.db.index=0
+
+# Elastic Search
+es.url=vpc-videokycdeves-xh7xqswc5iidrc4iv5l2iowdhu.ap-south-1.es.amazonaws.com
+es.username=dev-workapps
+es.password=Elastic@1234
+es.get.request.template.path=/home/workapps/rms/conf/templates/elastic-search-get-meeting-bandwidth-info.json
+es.api.requests.index.name=api_request
+es.user.intraction.event.index.name=user_intraction_event
+es.network.info.index.name=network_info
+es.job.index.name=job_history
+
+# System User
+system.user=ims_sys_user@axisb.com
+ims.system.userid=3
+
+# CORS
+access.control.allow.origin=videokycdev.axisb.com
+
+# Web Push
+web.push.public.key=BGX2ot2PhlDxmesY2VmxdTMZLpK0Rrex2iRWeR5F911DxMxRxAH7S5IGl-s3leQTQlLDX1mx_VTkgN_H6Rb739I
+web.push.private.key=NhGtCgL4W4UIBXRhpDAnRvUcWWdySgJsZiW9zE9syTs
+
+# Welcome Message
+videokyc.customer.welcome.message=Hello there, a warm welcome from Axis Bank! I will call you now for your Video KYC, please accept the call and allow camera and microphone permission. In case the call gets disconnected, I will try and reconnect. Please do not close or refresh the browser.
+

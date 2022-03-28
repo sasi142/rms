@@ -1,0 +1,16 @@
+package core.services;
+
+import core.entities.Meeting;
+import core.entities.Memo;
+import core.entities.MemoChatUser;
+
+import java.util.List;
+
+public interface MeetingService {
+
+	public Integer createMeeting(Integer groupId, Boolean autoRecording, Integer currentUserId, Byte meetingType, Integer to);
+
+	Integer createRecording(Integer groupId, Integer meetingId, Byte recordingType, Byte recordingMethod, Integer currentUserId, Integer to);
+
+	Meeting getMeetingDetails(Integer meetingId);
+}

@@ -1,0 +1,21 @@
+error.message=error message from rms.properties
+chat.grouping.delay.duration=900000
+
+
+#GROUP CHAT EVENT NOTIFICATIONS ------------------------------START---------------------------------------------
+AddGroup={GrpC} created the Group Chat "{Grp}"
+UpdateGroup_AddMember={GrpC} added {GrpM}
+UpdateGroup_RemoveMember={GrpC} removed {GrpM}
+UpdateGroup_ChangeGroupName={GrpC} changed the Group Chat name from "{GrpOldName}" to "{GrpNewName}"
+CloseGroup={GrpC} closed this Group Chat
+LeaveGroup={GrpM} left this Group Chat
+ExitGroup={GrpM} left this Group Chat
+
+AddGroup.params=GrpC,Grp
+UpdateGroup_AddMember.params=GrpC,GrpM
+UpdateGroup_RemoveMember.params=GrpC,GrpM
+UpdateGroup_ChangeGroupName.params=GrpC,GrpOldName,GrpNewName
+CloseGroup.params=GrpC
+LeaveGroup.params=GrpM 
+ExitGroup.params=GrpM
+#GROUP CHAT EVENT NOTIFICATIONS ------------------------------END---------------------------------------------

@@ -1,0 +1,86 @@
+environment=stage
+
+# jdbc.X
+jdbc.url=jdbc:mysql://dev-workapps.c803yyqtwsnr.ap-south-1.rds.amazonaws.com:3306/dev_rms?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&noAccessToProcedureBodies=true
+jdbc.user=devMasked
+jdbc.pass=Pet@a!l0us05
+
+# MySQL Connection pool
+#(int) The maximum number of milliseconds that the pool will wait (when there are no available connections) for a connection to be returned before throwing an exception. Default value is 30000 (30 seconds)
+connectionpool.maxActive=500
+#(int) The maximum number of connections that should be kept in the pool at all times. Default value is maxActive:100 connections idle for longer than minEvictableIdleTimeMillis will be released
+connectionpool.maxIdle=50
+#(int) The minimum number of established connections that should be kept in the pool at all times. Default value is derived from initialSize:10
+connectionpool.minIdle=50
+#(int)The initial number of connections that are created when the pool is started. Default value is 10
+connectionpool.initialSize=20
+
+# Internal API call from RMS to IMS
+ims.validate.token.url=https://devims.workapps.com/ims/users/token/validate
+ims.signin.url=https://devims.workapps.com/ims/users/signin
+get.contacts.url=https://devims.workapps.com/ims/users/v2/{0}/contacts?contactsType=All&userType=ALL&details=false&offset={1}&limit={2}&orderBy=Asc
+get.chat.contacts.url=https://devims.workapps.com/ims/users/{0}/chat-contacts?userType=All&offset={1}&limit={2}&searchKey={3}&isMobileOrdering={4}
+get.chat.contactId.url=https://devims.workapps.com/ims/users/{0}/chat-contacts/{1}?chatType={2}
+ims.delete.device.token.url=https://devims.workapps.com/ims/devices/remove
+
+#Redis Instance
+redis.server.master=dev-workapps.knycmu.0001.aps1.cache.amazonaws.com:6379
+redis.server.read.replica=
+redis.server.password=workapps
+redis.ims.db.index=0
+redis.rms.db.index=3
+redis.ims.connection.max.active=50
+redis.ims.connection.max.idle=10
+
+# ims server info
+ims.http.host=devims.workapps.com
+ims.http.port=8080
+ims.http.scheme=http
+
+#system user info
+system.user=ims_sys_user@ideacts.com
+ims.system.userid=1
+
+#Atmoshpere properties for CROS
+access.control.allow.origin=.workapps.com
+
+enable.xsrf.check=true
+
+enable.xsrf.check=true
+
+############################################################## NOT TO BE MODIFIED ###############################################
+
+# API authentication keys and secret
+apis.key.secret.pair=95cfa8dcAe4d4A46ceAa52bA74066e36e:qrqrwe324324wffdsaf324324324dsfdsf324
+ims.api.key=95cfa8dcAe4d4A46ceAa52bA74066e36e
+ims.api.secret=qrqrwe324324wffdsaf324324324dsfdsf324
+
+# Http Connection Pooling
+max.https.connections=10
+max.per.route.connections=5
+
+#GCM
+gcm.thread.pool.size=50
+gcm.workapps.app.key=AIzaSyA-qqafrNe_kz9_VGvXAWk6isIQsFHSRUQ
+gcm.workapps.chat.app.key=AIzaSyD687ltT4ga2AhfWI9pQGfWdffqb4lFRrc
+
+#APNS 
+apns.workapps.cert.password=W0rkApps
+apns.workapps.cert.filename=/usr/local/rms/conf/WorkAppsKey.p12
+apns.workapps.chat.cert.password=workappschat
+apns.workapps.chat.cert.filename=/usr/local/rms/conf/WorkAppsChatKey.p12
+apns.thread.pool.size=50
+
+group.chat.supported.clients=101,108
+one2one.chat.supported.clients=101,102,103,107,108,109,111
+one2one.video.chat.supported.clients=101
+
+#set http proxy
+enable.http.proxy=false
+http.proxy.host=10.10.10.83
+http.proxy.port=808
+http.proxy.username=shankar
+http.proxy.password=borate
+
+
+always.send.push.notification=false

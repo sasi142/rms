@@ -1,0 +1,23 @@
+{
+  "query": {
+	"bool": { 
+		"must": [ {
+				"match": { "meetingId": "$meetingId" }
+			},
+			{
+				"range": { "bandwidth": { "gt": 0 } }
+			}
+		]
+	}
+  },
+  "aggs": {
+    "dimension": {
+      "terms": {
+        "field": "userId"
+      },
+      "aggs" :{
+      "max_bandwidth" : { "max" : { "field" : "bandwidth" } },
+        "min_bandwidth" : { "min" : { "field" : "bandwidth" } }
+      }}},
+  "size": 0
+}

@@ -1,0 +1,19 @@
+package core.daos;
+
+import java.util.List;
+import java.util.Optional;
+
+import core.entities.Recording;
+
+public interface RecordingDao extends JpaDao<Recording> {
+	public void updateRecordingStage(Integer recordingId, Byte recordingStage, Long endDate);
+
+	public void updateRecordingOnStopEvent(Integer recordingId, Long chatId, Integer attachmentId, Byte recordingStage,
+			Long endDate);
+
+	public List<Recording> getRecordingsByGroupId(Integer groupId);
+
+	Optional<String> markForReprocessing(final Long groupId, final Integer recordingId, final Boolean transcoding, final Integer maxReprocessingCount);
+
+	Recording getExistingRecording(Integer meetingId);
+}

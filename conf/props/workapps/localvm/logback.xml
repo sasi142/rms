@@ -1,0 +1,51 @@
+
+<configuration>
+
+  <appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%date | %X{userId} | %X{UUID} | %thread | %-5p | %class{50}.%method:%L | %m%n
+			</pattern>
+		</encoder>	
+	</appender>
+	
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/rms.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>logs/rms.%d{yyyy-MM-dd}.%i.log
+			</FileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>100</maxHistory>
+		</rollingPolicy>
+		
+		<encoder> 
+		    <Pattern>%date | %X{userId} | %X{UUID} | %thread | %-5p | %class{0}.%method:%L | %m%n</Pattern>
+		</encoder>
+	</appender>	
+
+	<appender name="ASYNC500"
+		class="ch.qos.logback.classic.AsyncAppender">
+		<queueSize>500</queueSize>
+		<discardingThreshold>0</discardingThreshold>
+		<appender-ref ref="FILE" />
+	</appender>
+
+	<logger name="play" level="DEBUG" />
+	<logger name="akka" level="DEBUG" />
+	<logger name="org" level="DEBUG" />
+	<logger name="com" level="DEBUG" />
+	<logger name="controllers" level="DEBUG" />
+	<logger name="core" level="DEBUG" />
+	<logger name="utils" level="DEBUG" />
+	<logger name="messages" level="DEBUG" />
+
+	<root level="DEBUG">
+		<appender-ref ref="STDOUT" /> 
+		<appender-ref ref="FILE" />
+	</root>
+
+</configuration>

@@ -1,0 +1,148 @@
+environment=UAT
+# jdbc.X
+jdbc.url=jdbc:mysql://ib-si-video-kyc-mysql.mysql.database.azure.com:3306/prod_rms?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&noAccessToProcedureBodies=true&useSSL=true
+jdbc.user={<ENC>}7NtEN2u5R7b-CMcJnfBC0qmgVw3eR8lou2kiiLPrLKtnyF2dwDGllrbvE5pnOw{</ENC>}
+jdbc.pass={<ENC>}49pdP2GUH-qNIvA9o3lkaiWwFBmJlY-m0Q{</ENC>}
+
+# MySQL Connection pool
+#(int) The maximum number of milliseconds that the pool will wait (when there are no available connections) for a connection to be returned before throwing an exception. Default value is 30000 (30 seconds)
+connectionpool.maxActive=500
+#(int) The maximum number of connections that should be kept in the pool at all times. Default value is maxActive:100 connections idle for longer than minEvictableIdleTimeMillis will be released
+connectionpool.maxIdle=50
+#(int) The minimum number of established connections that should be kept in the pool at all times. Default value is derived from initialSize:10
+connectionpool.minIdle=50
+#(int)The initial number of connections that are created when the pool is started. Default value is 10
+connectionpool.initialSize=50
+
+# Internal API call from RMS to IMS
+ims.validate.token.url=http://localhost:8087/ims/users/token/validate
+ims.signin.url=http://localhost:8087/ims/users/signin
+get.contacts.url=http://localhost:8087/ims/users/v2/{0}/contacts?contactsType=All&userType=ALL&details=false&offset={1}&limit={2}&orderBy=Asc
+get.chat.contacts.url=http://localhost:8087/ims/users/{0}/chat-contacts?userType=All&offset={1}&limit={2}&searchKey={3}&isMobileOrdering={4}
+get.chat.contactId.url=http://localhost:8087/ims/users/{0}/chat-contacts/{1}?chatType={2}
+ims.delete.device.token.url=http://localhost:8087/ims/devices/remove
+open.group.chat.url=https://videokycuat.icicibank.com/gc/
+ims.videokyc.system.change.status=http://localhost:8087/ims/videokyc/system/{0}/status
+
+# Cache type to be set as 'RedisCache' or 'LocalCache'
+cache.type=RedisCache
+
+#Redis Instance
+redis.server.master=172.30.14.46:6379
+redis.server.read.replica=
+redis.server.password={<ENC>}t9liMnyYT-DbLe9e3-A-j5C2WyupTtpcxD0iyvPSyM9D8QFEgJcDWFEjEadllsynatZutI-LgKtM-pVf{</ENC>}
+redis.ims.db.index=0
+redis.rms.db.index=3
+redis.ims.connection.max.active=100
+redis.ims.connection.max.idle=10
+redis.password.enabled=true
+
+# ims server info
+ims.http.host=localhost
+ims.http.port=8087
+ims.http.scheme=http
+
+#system user info
+system.user=ims_sys_user@icicibank.com
+ims.system.userid=3
+
+#Atmoshpere properties for CROS
+access.control.allow.origin=videokycuat.icicibank.com,videokyc-uat.icicihfc.com
+
+enable.xsrf.check=true
+
+############################################################## NOT TO BE MODIFIED ###############################################
+
+# API authentication keys and secret
+apis.key.secret.pair=46a0d221s1914s41bcs93ebsa8e3f95fb421:0dfa0a6fsb9c4s4401saf30s33295f5f2c9f,e4c59afds5b64s4c11s8c6ese42808e78b8c:d809bb2fsc446s4ea2sb830sea9868e51f5c
+
+ims.api.key=e4c59afds5b64s4c11s8c6ese42808e78b8c
+ims.api.secret=d809bb2fsc446s4ea2sb830sea9868e51f5c
+
+# Http Connection Pooling
+max.https.connections=10
+max.per.route.connections=5
+
+#GCM
+gcm.thread.pool.size=50
+gcm.workapps.app.key=AIzaSyCUn8_3YECoolMVK9qKv4s7MLCBTrDM8ZU
+gcm.workapps.chat.app.key=AIzaSyDi5JKYTtkP0eoHFfELR6FvTxOIeMBbtfY
+
+#APNS
+apns.workapps.cert.password=W0rk@ppsMainP0
+apns.workapps.cert.filename=/mnt/resource/rms/conf/WorkAppsMain_Prod_18_Jan_2017.p12
+apns.workapps.chat.cert.password=W0rk@ppsChatP0
+apns.workapps.chat.cert.filename=/mnt/resource/rms/conf/WorkAppsChat_Prod_18_Jan_2017.p12
+apns.thread.pool.size=50
+
+group.chat.supported.clients=101,108,109,111,114,115
+one2one.chat.supported.clients=101,102,103,107,108,109,111
+#one2one.video.chat.supported.clients=101,111
+
+video.chat.supported.clients=101,111
+
+#set http proxy
+enable.http.proxy=false
+http.proxy.host=10.10.10.83
+http.proxy.port=808
+http.proxy.username=shankar
+http.proxy.password=borate
+
+always.send.push.notification=false
+
+#presence-task-executor-configuration
+presence.task.executor.pool.size=500-5000
+presence.task.executor.queue.size=100
+presence.task.executor.keep.alive=100
+
+#DeploymentType(Cloud/OnPremise)
+deployment.type=OnPremise
+
+#Web Push Public and Private Keys
+web.push.public.key=BGX2ot2PhlDxmesY2VmxdTMZLpK0Rrex2iRWeR5F911DxMxRxAH7S5IGl-s3leQTQlLDX1mx_VTkgN_H6Rb739I
+web.push.private.key=NhGtCgL4W4UIBXRhpDAnRvUcWWdySgJsZiW9zE9syTs
+
+#Elastic Search 
+es.url=172.30.14.23
+es.port=9200
+es.protocol=http
+es.username=dev-workapps
+es.password=Elastic@1234
+es.auth.required=false
+es.api.requests.index.name=dev_api_request
+es.user.intraction.event.index.name=dev_user_intraction_event
+es.network.info.index.name=dev_network_info
+es.enabled=true
+es.get.request.template.path=/data/waapps/rms/conf/templates/elastic-search-get-meeting-bandwidth-info.json	
+enable.store.network.info.in.es=true
+
+## machine id is used to route web requests and should be unique for each node
+machine.id=1
+elastic.search.get.request.template.path=/datadrive/rms/conf/templates/elastic-search-get-meeting-bandwidth-info.json
+elastic.search.protocol=http
+
+host.name=https://videokycuat.icicibank.com
+ims.refresh.videokyc.cache=http://localhost:8080/ims/videokyc/refreshVideoKycCache
+
+# Elastic search write task
+es.write-job.delay=1000
+es.pool.max-connection=5
+es.write-job.batch-size=100
+es.flush.task.executor.pool.size=10
+es.flush.task.executor.queue.size=100
+es.flush.task.executor.keep.alive=5
+
+# Message configs
+customer.assigned.message=New customer {userName} assigned
+create.memo.upload.file.base.path=
+supported.excel.file.ext=xls,xlsx
+custom.memo.column.list=User ID,Subject,Content,Sharing
+
+bulk.memo.process.cron.job.interval=* * * * 1 *
+memo.process.job.lock.atleast.time=5000
+memo.process.job.lock.atmost.time=10000
+number.Of.File.Processed.In.Job=200
+memo.process.badge.count=5000
+
+#Ext Override
+videokyc.average.call.duration=420

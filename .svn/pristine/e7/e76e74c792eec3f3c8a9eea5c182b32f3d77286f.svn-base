@@ -1,0 +1,32 @@
+environment=PROD
+owb.internal=http://localhost:5081/owb
+main.domain=videokyc.ujjivansfb.in
+ims.internal=http://localhost:5080/ims
+main.url=https://${main.domain}
+
+# ims server info
+ims.http.host=localhost
+ims.http.port=5080
+ims.http.scheme=http
+
+# jdbc.X
+jdbc.url=jdbc:mysql://10.20.101.28:6646/prod_rms?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&noAccessToProcedureBodies=true
+jdbc.user={<ENC>}4dJfN2SxSovMF-BcnvUAzY8PN6qISqMXjUsaRsqiFfY{</ENC>}
+jdbc.pass={<ENC>}0ttCO0-6a7bdBJMTzfTFKxNeZi5eCBbWxKEJamE{</ENC>}
+
+redis.server.master=10.20.100.86:6379
+redis.password.enabled=true
+redis.server.password={<ENC>}19xZJ3q9WvHLEoYc3GopQnCTYsUTKuMCZ_GtXiw{</ENC>}
+
+#Elastic Search
+es.enabled=false
+
+system.user=ims_sys_user@ujjivan.com
+ims.system.userid=3
+
+access.control.allow.origin=${main.domain}
+
+web.push.public.key=BGX2ot2PhlDxmesY2VmxdTMZLpK0Rrex2iRWeR5F911DxMxRxAH7S5IGl-s3leQTQlLDX1mx_VTkgN_H6Rb739I
+web.push.private.key=NhGtCgL4W4UIBXRhpDAnRvUcWWdySgJsZiW9zE9syTs
+
+videokyc.customer.welcome.message=Hello there, a warm welcome from Ujjivan Small Finance Bank! Our Agent will video call you now and assist you in Video KYC. In case the call gets disconnected, our Agent will try and reconnect with you. Please do not close or refresh the page

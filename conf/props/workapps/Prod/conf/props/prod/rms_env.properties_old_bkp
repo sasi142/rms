@@ -1,0 +1,111 @@
+environment=prod
+
+# jdbc.X
+jdbc.url=jdbc:mysql://uat-workapps.c803yyqtwsnr.ap-south-1.rds.amazonaws.com:3306/pre_rms?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&noAccessToProcedureBodies=true&useSSL=false
+jdbc.user={<ENC>}2rgRB5zch3BC0sEczrVsCA{</ENC>}
+jdbc.pass={<ENC>}HxdsEasp16jERWGY9Rxebw{</ENC>}
+
+# MySQL Connection pool
+#(int) The maximum number of milliseconds that the pool will wait (when there are no available connections) for a connection to be returned before throwing an exception. Default value is 30000 (30 seconds)
+connectionpool.maxActive=200
+#(int) The maximum number of connections that should be kept in the pool at all times. Default value is maxActive:100 connections idle for longer than minEvictableIdleTimeMillis will be released
+connectionpool.maxIdle=30
+#(int) The minimum number of established connections that should be kept in the pool at all times. Default value is derived from initialSize:10
+connectionpool.minIdle=20
+#(int)The initial number of connections that are created when the pool is started. Default value is 10
+connectionpool.initialSize=10
+
+# Internal API call from RMS to IMS
+ims.validate.token.url=http://localhost:8080/ims/users/token/validate
+ims.signin.url=http://localhost:8080/ims/users/signin
+get.contacts.url=http://localhost:8080/ims/users/v2/{0}/contacts?contactsType=All&userType=ALL&details=false&offset={1}&limit={2}&orderBy=Asc
+get.chat.contacts.url=http://localhost:8080/ims/users/{0}/chat-contacts?userType=All&offset={1}&limit={2}&searchKey={3}&isMobileOrdering={4}
+get.chat.contactId.url=http://localhost:8080/ims/users/{0}/chat-contacts/{1}?chatType={2}
+ims.delete.device.token.url=https://uat.workapps.com/ims/devices/remove
+open.group.chat.url=https://uat.workapps.com/gc/
+
+# Cache type to be set as 'RedisCache' or 'LocalCache'
+cache.type=RedisCache
+#Redis Instance
+redis.server.master=dev-redis.knycmu.ng.0001.aps1.cache.amazonaws.com:6379
+redis.server.read.replica=
+redis.server.password=workapps
+redis.ims.db.index=10
+redis.rms.db.index=10
+redis.ims.connection.max.active=500
+redis.ims.connection.max.idle=100
+
+# ims server info
+ims.http.host=ims.workapps.com
+ims.http.port=8080
+ims.http.scheme=http
+
+#system user info
+system.user=ims_sys_user@ideacts.com
+ims.system.userid=3
+
+#Atmoshpere properties for CROS
+access.control.allow.origin=.workapps.com,.lyncbiz.com,.croma.com,.videoapps.io,.whistleblower.chat
+
+enable.xsrf.check=true
+
+############################################################## NOT TO BE MODIFIED ###############################################
+
+# API authentication keys and secret
+apis.key.secret.pair=46a0d221s1914s41bcs93ebsa8e3f95fb421:0dfa0a6fsb9c4s4401saf30s33295f5f2c9f
+ims.api.key=e4c59afds5b64s4c11s8c6ese42808e78b8c
+ims.api.secret=d809bb2fsc446s4ea2sb830sea9868e51f5c
+
+# Http Connection Pooling
+max.https.connections=10
+max.per.route.connections=5
+
+#GCM
+gcm.thread.pool.size=50
+gcm.workapps.app.key=AIzaSyCUn8_3YECoolMVK9qKv4s7MLCBTrDM8ZU
+gcm.workapps.chat.app.key=AIzaSyDi5JKYTtkP0eoHFfELR6FvTxOIeMBbtfY
+
+#APNS
+apns.workapps.cert.password=W0rk@ppsMainP0
+apns.workapps.cert.filename=/usr/local/rms/conf/WorkAppsMain_Prod_18_Jan_2017.p12
+apns.workapps.chat.cert.password={<ENC>}PtBWkvTFR8_8VVdhZ7UlrA{</ENC>}
+apns.workapps.chat.cert.filename=/usr/local/rms/conf/WorkAppsChat_Prod_18_Jan_2017.p12
+apns.thread.pool.size=50
+
+group.chat.supported.clients=101,108,109,111,114,115
+one2one.chat.supported.clients=101,102,103,107,108,109,111
+#one2one.video.chat.supported.clients=101,111
+
+video.chat.supported.clients=101,111
+
+#set http proxy
+enable.http.proxy=false
+http.proxy.host=10.10.10.83
+http.proxy.port=808
+http.proxy.username=shankar
+http.proxy.password=borate
+
+always.send.push.notification=false
+
+#presence-task-executor-configuration
+presence.task.executor.pool.size=500-5000
+presence.task.executor.queue.size=100
+presence.task.executor.keep.alive=100
+
+#DeploymentType(Cloud/OnPremise)
+deployment.type=Cloud
+redis.password.enabled=false
+
+#Web Push Public and Private Keys
+web.push.public.key=BGX2ot2PhlDxmesY2VmxdTMZLpK0Rrex2iRWeR5F911DxMxRxAH7S5IGl-s3leQTQlLDX1mx_VTkgN_H6Rb739I
+web.push.private.key=NhGtCgL4W4UIBXRhpDAnRvUcWWdySgJsZiW9zE9syTs
+
+#Elastic Search 
+elasticsearch.url=search-prod-workapps-4utjd4575l7azr62wlh4odfqvu.ap-south-1.es.amazonaws.com
+elasticsearch.index.name=prod_video_meeting
+elasticsearch.port=80
+
+enable.store.network.info.in.es=true
+
+## machine id is used to route web requests and should be unique for each node
+machine.id=1

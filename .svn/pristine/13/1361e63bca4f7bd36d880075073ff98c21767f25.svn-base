@@ -1,0 +1,62 @@
+package core.daos.impl;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.Query;
+import javax.persistence.StoredProcedureQuery;
+
+import org.springframework.stereotype.Repository;
+
+import core.daos.RecordingDao;
+import core.entities.Recording;
+
+@Repository
+public class RecordingDaoImpl extends AbstractJpaDAO<Recording> implements RecordingDao {
+	public RecordingDaoImpl() {
+		super();
+		setClazz(Recording.class);
+	}
+
+	@Override
+	public void updateRecordingStage(Integer recordingId, Byte recordingStage, Long endDate) {
+		Query query = entityManager.createNamedQuery("Recording.UpdateRecordingStage");
+		query.setParameter("recordingId", recordingId);
+		query.setParameter("recordingStage", recordingStage);
+		query.setParameter("endDate", endDate);
+		query.executeUpdate();
+	}
+	
+	@Override
+	public List<Recording> getRecordingsByGroupId(Integer groupId) {
+		Query query = entityManager.createNamedQuery("Recording.GetRecordingsByGroupId");
+		query.setParameter("groupId", groupId);		
+		List<Recording> recordingList = query.getResultList();
+		return recordingList;
+	}
+
+    @Override
+    public Optional<String> markForReprocessing(final Long groupId, final Integer recordingId, final Boolean transcoding, final Integer maxReprocessingCount) {
+		final StoredProcedureQuery query = entityManager.createNamedStoredProcedureQuery("Recording.MarkForReprocessing");
+		query.setParameter("P_GroupId", groupId);
+		query.setParameter("P_RecordingId", recordingId == null ? 0 : recordingId);
+		query.setParameter("P_EnableTranscoding", transcoding);
+		query.setParameter("P_ReprocessRetry", maxReprocessingCount);
+		query.execute();
+		final boolean isSuccess = (boolean)query.getOutputParameterValue("O_IsSuccess");
+		final String message = (String)query.getOutputParameterValue("O_Message");
+		logger.info("isSuccess: {}, message: {}", isSuccess, message);
+		return isSuccess ? Optional.empty():Optional.of(message);
+	}
+
+    @Override
+	public void updateRecordingOnStopEvent(Integer recordingId, Long chatId, Integer attachmentId, Byte recordingStage, Long endDate) {
+		Query query = entityManager.createNamedQuery("Recording.UpdateRecordingOnStopEvent");
+		query.setParameter("recordingId", recordingId);
+		query.setParameter("recordingStage", recordingStage);
+		query.setParameter("chatId", chatId);
+		query.setParameter("attId", attachmentId);
+		query.setParameter("endDate", endDate);
+		query.executeUpdate();
+	}
+}

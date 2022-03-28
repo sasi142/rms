@@ -1,0 +1,12 @@
+2015-06-03 19:55:59,168 - [INFO] - from play in pool-4-thread-3 
+Listening for HTTP on /0:0:0:0:0:0:0:0:9000
+
+2015-06-03 19:56:05,469 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2015-06-03 19:56:05,953 - [INFO] - from play in play-akka.actor.default-dispatcher-8 
+chat connection request coming from client
+
+2015-06-03 19:56:06,243 - [INFO] - from play in RmsActorSystem-akka.actor.default-dispatcher-15 
+Create new actor : dffg
+

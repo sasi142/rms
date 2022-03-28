@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="sbt: software.amazon.awssdk:aws-json-protocol:2.17.150:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/software/amazon/awssdk/aws-json-protocol/2.17.150/aws-json-protocol-2.17.150.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/software/amazon/awssdk/aws-json-protocol/2.17.150/aws-json-protocol-2.17.150-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/software/amazon/awssdk/aws-json-protocol/2.17.150/aws-json-protocol-2.17.150-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

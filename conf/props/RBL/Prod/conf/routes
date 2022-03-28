@@ -1,0 +1,60 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page (Dummy Pages)
+GET     /rms                             @controllers.MainController.index()
+GET     /rms/app/health                  @controllers.MainController.healthCheck()
+GET     /rms/app/device-check            @controllers.MainController.deviceCheck(token:String, message:String, type:String)
+GET     /rms/monitor                     @controllers.MonitoringController.getMonitoringReport(actors:Boolean?=true, details:Boolean?=false)
+DELETE  /rms/connection-info/ip/:ip   	 @controllers.MainController.removeConnectionInfo(ip: String)
+GET     /rms/room                        @controllers.MainController.chatRoom(username: String ?= null)
+GET     /assets/javascripts/chatroom.js  @controllers.MainController.chatRoomJs(username)
+GET     /room-message                    @controllers.MainController.getRoomMessage()
+
+#RMS routes
+GET     /rms/chat                        controllers.ChatController.chat()
+PUT     /rms/chat/presence               @controllers.ChatController.updatePresence()
+POST    /rms/chat/sendMessage            @controllers.ChatController.sendMessage(request:Request)
+POST    /rms/chat/system/sendMessage     @controllers.ChatController.systemSendMessage(request:Request)
+
+OPTIONS     /rms/chat                    @controllers.ChatController.chatOptions()
+GET     /rms/users/:id                   @controllers.UsersController.getUser(id: Integer)
+GET     /rms/users/:id/contacts          @controllers.UsersController.getContacts(id: Integer, offset:Integer?=0,limit:Integer ?=20, search:String ?= null)
+GET     /rms/users/:id/contacts/v2       @controllers.UsersController.getContactsV2(id: Integer, offset:Integer?=0,limit:Integer ?=20, search:String ?= null)
+GET     /rms/users/:id/contacts/:contactId       @controllers.UsersController.getChatContact(id: Integer, contactId:Integer,chatType:Integer?=0)
+GET     /rms/users/:id/contacts/:contactId/v2       @controllers.UsersController.getChatContactV2(id: Integer, contactId:Integer,chatType:Integer?=0)
+GET     /rms/users/chat/unreadcount      @controllers.ChatController.getUnReadMessagesUserCount()
+GET    /rms/users/chat/unreadContactcount     @controllers.ChatController.getUnreadContactcount(strUserIds: String, offset:Integer?=0,limit:Integer ?=20)
+GET     /rms/one2one/chat-history/users/:to @controllers.ChatController.getOne2OneChatHistory(to:Integer, mergeChats:Boolean?=true, offset:Integer?=0,limit:Integer ?=20)
+GET     /rms/one2one/chat-history/users/:to/v2 @controllers.ChatController.getOne2OneChatHistoryV2(to:Integer, lastMsgDate:Long?=9999999999999L, offset:Integer?=0,limit:Integer ?=20)
+GET     /rms/group/chat-history/groups/:to  @controllers.ChatController.getGroupChatHistory(to:Integer, mergeChats:Boolean?=true, offset:Integer?=0,limit:Integer ?=20)
+GET     /rms/group/chat-history/groups/:to/v2  @controllers.ChatController.getGroupChatHistoryV2(to:Integer, lastMsgDate:Long?=9999999999999L, offset:Integer?=0,limit:Integer ?=20)
+PUT     /rms/group/chat-history/:messageId/attachments/:attachmentId/docType/:docType  @controllers.ChatController.updateDocType(messageId:Integer, attachmentId:Integer, docType:Integer)
+POST    /rms/events  @controllers.EventController.processEvents(request:Request)
+POST    /rms/notifications @controllers.NotificationController.sendNotification(request: Request)
+#Memo
+POST    /rms/channels/:id/memos		        		     @controllers.MemoController.createChannelMessage(id: Integer, request:Request)
+#POST    /rms/channels/:id/memos/uploadChannelFollowerIds @controllers.MemoController.uploadChannelFollowerIds(id: Integer)
+POST    /rms/memos	       				 @controllers.MemoController.createMemo(request:Request)
+GET     /rms/memos/orgs/:orgId          	 @controllers.MemoController.getMemosByOrgId(orgId: Integer, offset:Integer?=0,limit:Integer ?=20)
+GET     /rms/memos/users/:userId        	@controllers.MemoController.getMemosByUserId(userId: Integer, offset:Integer?=0,limit:Integer ?=20)
+GET		/rms/memos/users/:userId/count		@controllers.MemoController.getMemoCountByStatus(userId: Integer, readStatus: Boolean?=false)
+GET     /rms/memos/users/:userId/:channelId       @controllers.MemoController.getMemosByUserIdv2(userId: Integer, channelId: Integer, offset:Integer?=0, limit:Integer ?=20)
+GET     /rms/memos/:memoId          		@controllers.MemoController.getMemoDetails(memoId: Integer, needSummary: Boolean?=false)
+GET     /rms/memos/:memoId/v2          		@controllers.MemoController.getMemoDetailsv2(memoId: Integer, needSummary: Boolean?=false)
+GET     /rms/memos/:memoId/download    		@controllers.MemoController.getMemoDetailsDownloaded(memoId: Integer, offset:Integer?=0,limit:Integer ?=20)
+PUT     /rms/memos/:memoId/users/:userId 	@controllers.MemoController.changeReadStatus(memoId: Integer, userId: Integer, readStatus:Boolean?=false)
+PUT     /rms/memos/:memoId          	 	@controllers.MemoController.updateMemoPublicState(memoId: Integer, isPublic: Boolean?=false)
+GET    /rms/memos/public/:url        		@controllers.MemoController.getMemoByPublicURL(url: String)
+GET     /rms/memos/:memoId/chat-users    	@controllers.MemoController.getMemoChatUsers(memoId: Integer, offset:Integer?=0,limit:Integer ?=20)
+GET     /rms/memos/:publicUrl/:name        	@controllers.MemoController.getMessagePublicPage(publicUrl: String, name: String)
+GET     /rms/cache/refresh/:entityType      @controllers.CacheController.refreshCacheByEntityType(entityType: String)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file controllers.Assets.at(path="/public", file)
+GET     /rms/$path<.*>                        @controllers.MainController.catchAll(path)
+
+POST    /rms/tracking-events                @controllers.EventController.sendTrackingEvents(request:Request)
+
+

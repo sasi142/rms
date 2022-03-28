@@ -1,0 +1,197 @@
+#Client Info
+client-id=101
+
+#Redis IMS database
+redis.ims.contacts.store=ims-contacts-store
+redis.ims.user.store=ims-users-store
+redis.org.users.store=redis-org-users-store
+redis.ims.orgs.store=ims-orgs-store
+redis.ims.devices.store=ims-devices-store
+redis.ims.groups.store=ims-groups-store
+redis.ims.connection.timeout=100000
+
+#Redis RMS database
+redis.rms.user.connection.store=rms-user-connection-store
+redis.rms.client.certificate.store=rms-client-certificate-store
+redis.rms.instance.info.store=rms-instance-info-store
+redis.rms.video.meeting.room.store=video-meeting-room
+redis.rms.connection.max.active=500
+redis.rms.connection.max.idle=100
+redis.rms.connection.timeout=100000
+redis.ims.user.chat.window.store=ims-user-chat-window-store
+redis.ims.user.map.window.store=ims-user-map-window-store
+redis.ims.users.videokyc.store=ims-users-videokyc-store
+redis.ims.videokyc.store=ims-videokyc-store
+
+
+# Http Connection Pooling
+enable.http.connection.pooling=true
+http.socket.timeout=10000
+http.connection.request.timeout=30000
+http.connect.timeout=30000
+
+# Authenticated APIs
+apis.request.timeout=31556952000
+ims.validate.token.api.path=/users/token/validate
+ims.delete.device.token.api.path=/devices/remove
+
+#validation
+max.chat.text.length=1024
+min.search.string.length=2
+
+# jdbc.X
+jdbc.driverClassName=com.mysql.jdbc.Driver
+
+# Hibernate.X
+hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
+hibernate.show_sql=false
+hibernate.hbm2ddl.auto=validate
+
+# connectionpool
+#(long) avoid excess validation, only run validation at most at this frequency - time in milliseconds. If a connection is due for validation, but has been validated previously within this interval, it will not be validated again. The default value is 3000 (3 seconds)
+connectionpool.validationInterval=3000
+#(int) The minimum amount of time an object may sit idle in the pool before it is eligible for eviction. The default value is 60000 (60 seconds)
+connectionpool.minEvictableIdleTimeMillis=60000
+#(int) The number of milliseconds to sleep between runs of the idle connection validation/cleaner thread. This value should not be set under 1 second. It dictates how often we check for idle, abandoned connections, and how often we validate idle connections. The default value is 5000 (5 seconds)
+connectionpool.timeBetweenEvictionRunsMillis=5000
+#(boolean) Flag to remove abandoned connections if they exceed the removeAbandonedTimeout. If set to true a connection is considered abandoned and eligible for removal if it has been in use longer than the removeAbandonedTimeout Setting this to true can recover db connections from applications that fail to close a connection.
+connectionpool.removeAbandonedTimeout=60000
+#(int) The maximum number of milliseconds that the pool will wait (when there are no available connections) for a connection to be returned before throwing an exception. Default value is 30000 (30 seconds)
+connectionpool.maxWait=30000
+
+# Basic Environment properties
+enable.web.notification=true
+enable.apns.notification=false
+enable.gcm.notification=false
+enable.chat.notification=true
+enable.web.browser.notification=false
+
+# Time to Mark Device In-Active
+time.to.mark.device.inactive=63113852000
+
+#Atmoshpere properties for CROS
+access.control.allow.methods=POST,GET,OPTIONS,DELETE
+access.control.max.age=3600000
+access.control.allow.headers=x-owb-token,client-id,accept,origin,content-type
+enable.set.cors.headers=true
+
+#Client Ids
+workapps.app.client.ids=102,103
+chat.app.client-ids=108,109
+memo.app.client-ids=108,109
+web.push.notification.client.ids=101,111
+
+#Actor dispatcher
+user.connection.actor.dispatcher=user-connection-actor-dispatcher-fork-join
+gcm.actor.dispatcher=gcm-actor-dispatcher-fork-join
+apns.actor.dispatcher=apns-actor-dispatcher-fork-join
+event.actor.dispatcher=event-actor-dispatcher-fork-join
+notification.actor.dispatcher=notification-actor-dispatcher-fork-join
+chat.message.actor.dispatcher=chat-message-actor-dispatcher-fork-join
+iq.message.actor.dispatcher=iq-message-actor-dispatcher-fork-join
+web.browser.actor.dispatcher=web-browser-actor-dispatcher-fork-join
+video.signalling.actor.dispatcher=video-signalling-actor-dispatcher-fork-join
+
+actor.selection.timeout=2
+actor.check.presence=true
+desktop.chat.app.client.id=107
+show.desktop.icon.client.ids=101,107,111
+mobile.icon.client.ids=108,109
+mobile.connection.idle.time=21600000
+mobile.connection.ping.idle.time=120000
+closed.connection.push.notification.job.delay=900000
+enable.closed.connection.notification.job=true
+#websocket.idle.time=12000
+rms.instance.idle.time=70000
+
+memo.xls.worksheet.name=Memo Read Details
+memo.xls.column.headings=Name,Designation,Department,Sub Department,Mobile Number,Email ID,Memo Status
+ws.connection.info.redis.channel=ws_connection_info_channel
+sync.contacts.limit.for.compression=1000
+
+version.ios=3.1.0
+
+default.app.name=My Chats
+chat.message.for.registered.user={Name} is Not Registered with {AppName} as yet, so may not receive this message.
+chat.message.for.not.registered.user=You were Not Registered when {Name} sent the above message.
+system.message.for.unavailable.user=User(s) of this chat are either not on their desk currently, or might be occupied, hence there could be a delay in replying to your message.
+not.registered.custom.status=Not Registered
+sys.msg.duration.check=86400000
+supported.tls.protocols=TLSv1.1,TLSv1.2
+
+
+message.for.update.usecase.status= Status changed to '{UseCaseStatus}'
+
+photo.image.base.url=/owb/attachments/public/photos/
+attachment.image.base.url=/owb/attachments/v2/Memo/
+seo.url.base.string=message-profiles
+msg.heading.size.max=65
+msg.description.size.max=320
+image.file.extensions=jpg,jpeg,png
+attachment.type.image=image
+attachment.type.multipart=multipart/form-data
+follow.message.template.path=FollowMessageTemplate.vm
+
+host.name=https://uat.workapps.com
+
+snippet.allowed.length=150
+redis.ims.channel.store=ims-channels-store
+page.not.public.url=/web2/featureComponents/messages/messageDetails/follow-message-not-public.html
+#page.not.public.url=/web2/follow/FollowMessageNotPublic.html
+date.format=dd-MM-yyyy hh:mma
+charset=utf-8
+min.message.subject.len=3
+max.message.subject.len=128
+
+
+follow.message.template.path=FollowMessageTemplate.vm
+
+snippet.allowed.length=150
+redis.ims.channel.store=ims-channels-store
+page.not.public.url=/web2/featureComponents/messages/messageDetails/follow-message-not-public.html
+#page.not.public.url=/web2/follow/FollowMessageNotPublic.html
+date.format=dd-MM-yyyy hh:mma
+charset=utf-8
+min.message.subject.len=3
+max.message.subject.len=128
+
+owb.database.table.name=Prod_owb
+
+msg.title.size.max=40
+
+guest.chat.supported.browsers=Web-Chrome:90,Android-Chrome:65,Mac-Chrome:65,iOS-Chrome:12,Mac-Safari:12,Web-FireFox:10,Android-FireFox:10, Mac-FireFox:10
+guest.chat.supported.browsers.version=chrome:65,firefox:10,safari:12,samsungbrowser:8
+
+
+# non active redis websocket clean up job
+redis.websocket.conn.cleanup.job.on=true
+redis.websocket.conn.cleanup.job.interval=300000
+
+
+# stale actors job details
+stale.actors.cleanup.job.on=true
+websocket.idle.time=120000
+stale.actors.cleanup.job.time.interval=120000
+pubsub.channels.max.count=5
+
+
+rms.build.number=45274
+
+call.wait.time.upper.limit=86400
+
+# Video Kyc parameters. Do not change breating time
+videokyc.average.call.duration=120
+videokyc.agent.breathing.time=0
+videokyc.customer.welcome.message=Hi, we are going to start your Video KYC. Please accept the incoming call.
+#Video KYC Queue Failure Job
+videokyc.call.wait.lock.atleast.time=10000
+videokyc.call.wait.lock.atmost.time=30000
+videokyc.call_wait.cron.job.interval=0/20 * * * * *
+
+token.validation.time.limit=60000
+customer.queue.failure.retry.limit=3
+
+rekognition.service.use.iam.ec2.role=true
+customer.assigned.message=New customer {userName} assigned
+redis.application.setting.store=ims-application-setting-store
+

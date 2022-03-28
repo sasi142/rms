@@ -1,0 +1,20 @@
+{
+  "query": {
+    "match": {
+      "meetingId": "$meetingId"
+    }
+  }, 
+  "aggs": {
+  "dimension": {
+     "terms": {
+        "field": "userId"
+     }, 
+  "aggs" :{
+        "max_sentKBytes" : { "max" : { "field" : "sentKBytes" } },
+        "min_sentKBytes" : { "min" : { "field" : "sentKBytes" } },
+         "max_receivedKBytes" : { "max" : { "field" : "receivedKBytes" } },
+        "min_receivedKBytes" : { "min" : { "field" : "receivedKBytes" } }
+    }}},
+ "size": 0
+}
+

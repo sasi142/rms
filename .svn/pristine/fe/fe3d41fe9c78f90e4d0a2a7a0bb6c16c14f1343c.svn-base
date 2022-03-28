@@ -1,0 +1,78 @@
+<configuration>
+
+	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder> 
+		   <Pattern>%date | %thread | %-5p | %class{0}.%method:%L | %m%n</Pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>DEBUG</level>
+		</filter>
+	</appender>
+	
+
+	
+	<appender name="dailyRollingFileAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${application.home}/logs/rms.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${application.home}/logs/rms-%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>50MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>100</maxHistory>
+		</rollingPolicy>
+
+		<encoder> 
+		    <Pattern>%date | %thread | %-5p | %class{0}.%method:%L | %m%n</Pattern>
+		</encoder>
+	</appender>
+
+	<appender name="ASYNC500" class="ch.qos.logback.classic.AsyncAppender">
+		<queueSize>500</queueSize>
+		<discardingThreshold>0</discardingThreshold>
+		<appender-ref ref="dailyRollingFileAppender" />
+	</appender>
+	
+	<logger name="app" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="consoleAppender" />
+		<appender-ref ref="dailyRollingFileAppender" />
+	</logger>
+
+	
+	<!--
+	OLD configurations
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${application.home}/logs/rms.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			
+			<fileNamePattern>${application.home}/logs/rms-%d{yyyy-MM-dd}.%i.log
+			</fileNamePattern>
+			
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+				<maxFileSize>50MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<Pattern>%date | %thread | %-5p | %class{0}.%method:%L | %m%n
+			</Pattern>
+		</encoder>
+	</appender>	
+	
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>%date | %thread | %-5p | %class{0}.%method:%L | %m%n
+			</Pattern>
+		</encoder>
+	</appender> 
+	-->
+	
+	
+	<root level="INFO">
+		<appender-ref ref="dailyRollingFileAppender" />
+		<appender-ref ref="consoleAppender" />
+	</root>
+</configuration>

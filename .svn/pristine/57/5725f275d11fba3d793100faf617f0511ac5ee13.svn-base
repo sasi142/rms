@@ -1,0 +1,9 @@
+package core.daos;
+
+import core.entities.MeetingEvent;
+
+
+public interface MeetingEventDao extends JpaDao<MeetingEvent>{
+
+
+}
