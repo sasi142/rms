@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class SqsConfig {
+public class SQSConfig {
 
     @Value("${enable.http.proxy.support}")
     private Boolean enableHttpProxySupport;

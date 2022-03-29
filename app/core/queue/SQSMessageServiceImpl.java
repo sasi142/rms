@@ -41,7 +41,7 @@ public class SQSMessageServiceImpl implements SQSMessageService
     @Value("${integration.sqs.fetch-wait-on-error}")
     private Integer fetchWaitOnError;
 
-    private final SqsConfig sqsConfig;
+    private final SQSConfig sqsConfig;
 
     private boolean running = false;
 
@@ -51,7 +51,7 @@ public class SQSMessageServiceImpl implements SQSMessageService
 
     public AmazonSQS amazonSQS;
 
-    public SQSMessageServiceImpl(SqsConfig sqsConfig)
+    public SQSMessageServiceImpl(SQSConfig sqsConfig)
     {
         this.sqsConfig = sqsConfig;
     }
