@@ -37,14 +37,14 @@ public class ChimeMeetingEventDaoImpl extends AbstractJpaDAO<ChimeMeetingEvent> 
 		//	query.setMaxResults(limit);
 			results = query.getResultList();
 			if (CollectionUtils.isEmpty(results)) {
+				logger.debug("Chime Meeting Events Table is Empty");
 				throw new ResourceNotFoundException(Enums.ErrorCode.Entity_Not_Found, "No Chime Meeting Events Found.");
 			}
-			logger.info("num of chime-meeting-events found " + results.size());
 		} catch (NonUniqueResultException | NoResultException ex) {
 			logger.error("Exception during fetching Chime Meeting Events for meetingId: "+meetingId);
 			throw new InternalServerErrorException(Enums.ErrorCode.Entity_Not_Found,"Exception during Chime Meeting Events Retrieval.");
 		}
-		logger.info("getChimeMeetingEventsByMeetingId completed for meetingId: "+meetingId);
+		logger.info("getChimeMeetingEventsByMeetingId completed for meetingId:{}. No. of chime-meeting-events found: {}",meetingId, results.size());
 		return results;
 	}
 

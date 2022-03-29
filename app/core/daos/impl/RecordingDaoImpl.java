@@ -41,6 +41,7 @@ public class RecordingDaoImpl extends AbstractJpaDAO<Recording> implements Recor
 		setClazz(Recording.class);
 	}
 
+	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public void updateRecordingStage(Integer recordingId, Byte recordingStage, Long endDate) {
 		Query query = entityManager.createNamedQuery("Recording.UpdateRecordingStage");

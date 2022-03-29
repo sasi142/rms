@@ -98,10 +98,10 @@ public class ChimeMeetingController  extends Controller {
 		Integer currentUserId= ThreadContext.getUserContext().getUser().getId();
 
 		Boolean alwaysCreateNewRecording;
-		if(StringUtils.isEmpty(request.getQueryString("alwaysCreateNewRecording"))) {
+		if(StringUtils.isEmpty(request.getQueryString(Constants.ALWAYS_CREATE_NEW_RECORDING_STR))) {
 			alwaysCreateNewRecording=true;
 		} else {
-			alwaysCreateNewRecording = Boolean.valueOf(request.getQueryString("alwaysCreateNewRecording"));
+			alwaysCreateNewRecording = Boolean.valueOf(request.getQueryString(Constants.ALWAYS_CREATE_NEW_RECORDING_STR));
 		}
 		Recording recording = chimeMeetingService.startRecording(meetingId,currentUserId,alwaysCreateNewRecording);
 		logger.info("startRecording response as recordingId : "+recording);
@@ -123,11 +123,11 @@ public class ChimeMeetingController  extends Controller {
 		ObjectNode node = null;
 		if (event.getData() != null) {
 			node = (ObjectNode) event.getData();
-			node.put("meetingId",event.getMeetingId());
-			node.put("source",event.getEventSource());
-			node.put("eventType",event.getEventType());
-			node.put("userId",ThreadContext.getUserContext().getUser().getId());
-			node.put("timestamp", System.currentTimeMillis());
+			node.put(Constants.MEETING_ID_STR,event.getMeetingId());
+			node.put(Constants.SOURCE_STR,event.getEventSource());
+			node.put(Constants.EVENT_TYPE_STR,event.getEventType());
+			node.put(Constants.USER_ID_STR,ThreadContext.getUserContext().getUser().getId());
+			node.put(Constants.TIMESTAMP_STR, System.currentTimeMillis());
 		}
 		String messageId = sqsMessageService.sendMessage(event.getMeetingId().toString(),node.toString());
 		logger.info("messageId :"+messageId);

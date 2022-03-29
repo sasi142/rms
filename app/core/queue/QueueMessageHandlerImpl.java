@@ -4,6 +4,7 @@ import core.exceptions.InternalServerErrorException;
 import core.services.chimeevents.ChimeEventService;
 import core.services.chimeevents.ChimeEventServiceFactory;
 import core.utils.ChimeEnums;
+import core.utils.Constants;
 import core.utils.Enums;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,9 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-@Service("defaultQueueMessageHandler")
-public class DefaultQueueMessageHandler implements QueueMessageHandler {
-    private static final Logger logger = LoggerFactory.getLogger(DefaultQueueMessageHandler.class);
+@Service("queueMessageHandlerImpl")
+public class QueueMessageHandlerImpl implements QueueMessageHandler {
+    private static final Logger logger = LoggerFactory.getLogger(QueueMessageHandlerImpl.class);
 
     @Autowired
     private ChimeEventServiceFactory chimeEventServiceFactory;
@@ -41,24 +42,26 @@ public class DefaultQueueMessageHandler implements QueueMessageHandler {
     }
 
     private String fetchEventSource(JSONObject messageJSON) {
+        logger.debug("Fetching Event Source based on the Source");
         String eventSource = null;
         try {
-            eventSource = messageJSON.has("source") ? messageJSON.getString("source") : null;
+            eventSource = messageJSON.has(Constants.SOURCE_STR) ? messageJSON.getString(Constants.SOURCE_STR) : null;
+            logger.debug("source from the message: {}",eventSource);
             if(!StringUtils.isEmpty(eventSource)) {
                 switch (eventSource) {
-                    case "aws.chime":
+                    case Constants.EVENT_SOURCE_AWS_CHIME:
                         eventSource = ChimeEnums.EventSource.ChimeServer.getName();
                         break;
-                    case "aws.ecs":
+                    case Constants.EVENT_SOURCE_AWS_ECS:
                         eventSource = ChimeEnums.EventSource.RecordingECSTask.getName();
                         break;
-                    case "aws.s3":
+                    case Constants.EVENT_SOURCE_AWS_S3:
                         eventSource = ChimeEnums.EventSource.S3.getName();
                         break;
-                    case "aws.mediaconvert":
+                    case Constants.EVENT_SOURCE_AWS_MEDIACONVERT:
                         eventSource = ChimeEnums.EventSource.MediaConvertJob.getName();
                         break;
-                    case "WorkAppsWebApp":
+                    case Constants.EVENT_SOURCE_WORKAPPS_WEBAPP:
                         eventSource = ChimeEnums.EventSource.WorkAppsWebApp.getName();
                         break;
                 }

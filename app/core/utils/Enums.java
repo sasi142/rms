@@ -811,15 +811,18 @@ public class Enums {
 		FAILED_TO_SEND_MESSAGE_ON_QUEUE(4092, "Failed To Send Message On Queue"),
 		FAILED_TO_RECEIVE_MESSAGE_FROM_QUEUE(4093, "Failed To Receive Message From Queue"),
 		AWS_CHIME_END_MEETING_ERROR(4094,"AWS Chime Delete Meeting Error. "),
-		JSON_PARSING_ERROR(4095,"Error during Json Processing Action"),
+		JSON_PARSING_ERROR(4095,"Error during Json Parsing Action"),
 		MEETING_ALREADY_ENDED(4096,"Meeting has already ended"),
 		FAILED_TO_PARSE_EXTERNAL_MEETING_ID(4097,"Failed to process AWS External MeetingId into RMS MeetingId."),
 		MEDIACONVERT_PROCESS_FAILED(4098, "Media Convert Job processing Failed."),
 		MEDIACONVERT_AUDIO_OUTPUT_PROCESS_FAILED(4099, "Media Convert Audio Output processing Failed."),
 		MEDIACONVERT_VIDEO_OUTPUT_PROCESS_FAILED(4100, "Media Convert Video Output processing Failed."),
-		FAILED_TO_SAVE_CHIME_MEETING_EVENT(4101, "Failed to save Chime Meeting Event.");
-
-
+		FAILED_TO_SAVE_CHIME_MEETING_EVENT(4101, "Failed to save Chime Meeting Event."),
+		JSON_PROCESSING_ERROR(4102,"Error during Json Processing Action"),
+		FAILED_TO_PROCESS_CHIME_MEETING_EVENT(4103, "Failed to process Chime Meeting Event."),
+		FAILED_TO_UPDATE_MEETING_ATTENDEE_STATUS(4104, "Failed to Update Meeting Attendee Status."),
+		MEETING_ATTENDEE_RETRIEVAL_RETRIEVAL_FAILED(4105,"Failed to Retrieve Meeting Attendee Details"),
+		JSON_MAPPING_ERROR(4106,"Error during Json Mapping Action");
 
 		private Integer	id;
 		private String	name;

@@ -1,6 +1,5 @@
 package core.services.chimeevents;
 
-import core.daos.RecordingDao;
 import core.entities.ChimeMeetingEvent;
 import core.exceptions.InternalServerErrorException;
 import core.mediaconvert.MediaConvertService;
@@ -32,9 +31,6 @@ public class ChimeS3EventServiceImpl implements ChimeEventService {
     @Autowired
     private MediaConvertService mediaConvertService;
 
-    @Autowired
-    private RecordingDao recordingDao;
-
     private String sourceS3Bucket;
 
     private String sourceS3SubFolders;
@@ -42,38 +38,46 @@ public class ChimeS3EventServiceImpl implements ChimeEventService {
 
     @Override
     public void processEvents(JSONObject queueMessageJson, String eventSource, String messageId) {
-        ChimeMeetingEvent chimeMeetingEvent = frameChimeMeeting(queueMessageJson, eventSource);
-        if (!StringUtils.isEmpty(chimeMeetingEvent.getEventId()) && !StringUtils.isEmpty(chimeMeetingEvent.getEventType())) {
-            chimeEventTrackingService.saveChimeMeetingEvent(chimeMeetingEvent);
+        try {
+            logger.debug("ChimeS3EventService::processEvents Method started for eventSource: {} messageId: {}", eventSource, messageId);
+            ChimeMeetingEvent chimeMeetingEvent = frameChimeMeeting(queueMessageJson, eventSource);
+            if (!StringUtils.isEmpty(chimeMeetingEvent.getEventId()) && !StringUtils.isEmpty(chimeMeetingEvent.getEventType())) {
+                chimeEventTrackingService.saveChimeMeetingEvent(chimeMeetingEvent);
 
-            if (ChimeEnums.EventType.S3PutObject.getId().byteValue() == chimeMeetingEvent.getEventType().byteValue()) {
-                String destinationS3SubFolders = sourceS3SubFolders.substring(0,sourceS3SubFolders.lastIndexOf('/'));
-                mediaConvertService.initiateMediaJob("s3://" + sourceS3Bucket + "/" + sourceS3SubFolders, destinationS3Bucket + "/" + destinationS3SubFolders);
+                if (ChimeEnums.EventType.S3PutObject.getId().byteValue() == chimeMeetingEvent.getEventType()) {
+                    String destinationS3SubFolders = sourceS3SubFolders.substring(0, sourceS3SubFolders.lastIndexOf('/'));
+                    mediaConvertService.initiateMediaJob("s3://" + sourceS3Bucket + "/" + sourceS3SubFolders, destinationS3Bucket + "/" + destinationS3SubFolders);
+                }
             }
+        } catch (Exception ex) {
+            logger.error("failed to Process Chime Meeting Event. Event Source: {} messageId: {} ", eventSource, messageId, ex);
+            throw new InternalServerErrorException(Enums.ErrorCode.FAILED_TO_PROCESS_CHIME_MEETING_EVENT, Enums.ErrorCode.FAILED_TO_SAVE_CHIME_MEETING_EVENT.getName(), ex);
         }
+        logger.debug("ChimeS3EventService::processEvents Method Completed for eventSource: {} messageId: {}", eventSource, messageId);
     }
 
     private ChimeMeetingEvent frameChimeMeeting(JSONObject queueMessageJson, String eventSource) {
+        logger.debug("ChimeS3EventService::frameChimeMeeting has been started");
         ChimeMeetingEvent chimeMeetingEvent = new ChimeMeetingEvent();
         try {
-            if (Constants.OBJECT_CREATED.equalsIgnoreCase(queueMessageJson.getString("detail-type"))) {
-                JSONObject detailJson = queueMessageJson.getJSONObject("detail");
-                String eventId = queueMessageJson.getString("id");
-                String eventType = detailJson.getString("reason");
+            if (Constants.OBJECT_CREATED_STR.equalsIgnoreCase(queueMessageJson.getString(Constants.DETAIL_TYPE_STR))) {
+                JSONObject detailJson = queueMessageJson.has(Constants.DETAIL_STR) ? queueMessageJson.getJSONObject(Constants.DETAIL_STR) : null;
+                String eventId = queueMessageJson.has(Constants.ID_STR) ? queueMessageJson.getString(Constants.ID_STR) : null;
+                String eventType = detailJson.has(Constants.REASON_STR) ? detailJson.getString(Constants.REASON_STR) : null;
 
-                JSONObject bucket = detailJson.has("bucket") ? detailJson.getJSONObject("bucket") : null;
+                JSONObject bucket = detailJson.has(Constants.BUCKET_STR) ? detailJson.getJSONObject(Constants.BUCKET_STR) : null;
                 if (bucket != null) {
-                    sourceS3Bucket = bucket.has("name") ? bucket.getString("name") : null;
+                    sourceS3Bucket = bucket.has(Constants.NAME_STR) ? bucket.getString(Constants.NAME_STR) : null;
                 }
 
-                JSONObject objectJson = detailJson.has("object") ? detailJson.getJSONObject("object") : null;
+                JSONObject objectJson = detailJson.has(Constants.OBJECT_STR) ? detailJson.getJSONObject(Constants.OBJECT_STR) : null;
 
                 if (objectJson != null) {
-                    sourceS3SubFolders = objectJson.has("key") ? objectJson.getString("key") : null;
+                    sourceS3SubFolders = objectJson.has(Constants.KEY_STR) ? objectJson.getString(Constants.KEY_STR) : null;
                 }
 
-                Instant instant = Instant.parse(queueMessageJson.getString("time"));
-                Long eventTime = instant.getEpochSecond();
+                Instant instant = Instant.parse(queueMessageJson.getString(Constants.TIME_STR));
+                long eventTime = instant.getEpochSecond();
                 String data = detailJson.toString();
                 if (!StringUtils.isEmpty(eventId)) {
                     chimeMeetingEvent.setEventId(eventId);
@@ -84,7 +88,7 @@ public class ChimeS3EventServiceImpl implements ChimeEventService {
                     chimeMeetingEvent.setEventType(eventTypeEnum.getId().byteValue());
                 }
 
-                if (eventTime != null) {
+                if (eventTime > 0L) {
                     chimeMeetingEvent.setEventTime(eventTime);
                 }
 
@@ -103,6 +107,7 @@ public class ChimeS3EventServiceImpl implements ChimeEventService {
             logger.error("Failed to parse the message {}", queueMessageJson, e);
             throw new InternalServerErrorException(Enums.ErrorCode.JSON_PARSING_ERROR, Enums.ErrorCode.JSON_PARSING_ERROR.getName(), e);
         }
+        logger.debug("ChimeS3EventService::frameChimeMeeting has been completed");
         return chimeMeetingEvent;
     }
 }

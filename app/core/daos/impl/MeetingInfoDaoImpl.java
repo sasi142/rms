@@ -30,7 +30,7 @@ public class MeetingInfoDaoImpl extends AbstractJpaDAO<Meeting> implements Meeti
 	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public void updateMeetingStatus(Integer meetingId, Byte meetingStatus, Integer updatedById) {
-		logger.debug("updateMeetingStatus start");
+		logger.debug("updateMeetingStatus start for meetingId: {} meetingStatus: {}",meetingId,meetingStatus);
 		try {
 			Query updateStatusQuery = entityManager.createNamedQuery("updateMeetingStatus");
 			updateStatusQuery.setParameter("meetingStatus", meetingStatus);
@@ -50,12 +50,12 @@ public class MeetingInfoDaoImpl extends AbstractJpaDAO<Meeting> implements Meeti
 			updateStatusQuery.setParameter("updatedDate", System.currentTimeMillis());
 			updateStatusQuery.setParameter("meetingId", meetingId);
 			updateStatusQuery.executeUpdate();
-
 		}catch (Exception e) {
+			logger.debug("updateMeetingStatus Failed for meetingId: {} meetingStatus: {}",meetingId,meetingStatus);
 			throw new InternalServerErrorException(ErrorCode.Internal_Server_Error,
 					"Failed to update MeetingStatus to "+ meetingStatus, e);
 		}
-		logger.debug("updateMeetingStatus end");
+		logger.debug("updateMeetingStatus completed for meetingId: {} meetingStatus: {}",meetingId,meetingStatus);
 	}
 
 

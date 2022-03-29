@@ -22,21 +22,29 @@ public class ChimeMediaConvertEventServiceImpl implements ChimeEventService {
 
     @Override
     public void processEvents(JSONObject queueMessageJson, String eventSource, String messageId) {
-        ChimeMeetingEvent chimeMeetingEvent = frameChimeMeeting(queueMessageJson, eventSource);
-        if (!StringUtils.isEmpty(chimeMeetingEvent.getEventId()) && !StringUtils.isEmpty(chimeMeetingEvent.getEventType())) {
-            chimeEventTrackingService.saveChimeMeetingEvent(chimeMeetingEvent);
+        try {
+            logger.debug("ChimeMediaConvertEventService::processEvents Method started for eventSource: {} messageId: {}", eventSource, messageId);
+            ChimeMeetingEvent chimeMeetingEvent = frameChimeMeeting(queueMessageJson, eventSource);
+            if (!StringUtils.isEmpty(chimeMeetingEvent.getEventId()) && !StringUtils.isEmpty(chimeMeetingEvent.getEventType())) {
+                chimeEventTrackingService.saveChimeMeetingEvent(chimeMeetingEvent);
+            }
+        } catch (Exception ex) {
+            logger.error("failed to Process Chime Meeting Event. Event Source: {} messageId: {} ", eventSource, messageId, ex);
+            throw new InternalServerErrorException(Enums.ErrorCode.FAILED_TO_PROCESS_CHIME_MEETING_EVENT, Enums.ErrorCode.FAILED_TO_SAVE_CHIME_MEETING_EVENT.getName(), ex);
         }
+        logger.debug("ChimeMediaConvertEventService::processEvents Method Completed for eventSource: {} messageId: {}", eventSource, messageId);
     }
 
     private ChimeMeetingEvent frameChimeMeeting(JSONObject queueMessageJson, String eventSource) {
+        logger.debug("ChimeMediaConvertEventService::frameChimeMeeting has been started");
         ChimeMeetingEvent chimeMeetingEvent = new ChimeMeetingEvent();
         try {
-            if (Constants.MEDIACONVERT_JOB_STATE_CHANGE.equalsIgnoreCase(queueMessageJson.getString("detail-type"))) {
+            if (Constants.MEDIACONVERT_JOB_STATE_CHANGE_STR.equalsIgnoreCase(queueMessageJson.getString(Constants.DETAIL_TYPE_STR))) {
                 JSONObject detailJson = queueMessageJson.getJSONObject("detail");
 
-                String eventId = queueMessageJson.has("id") ? queueMessageJson.getString("id") : null;
-                String eventType = detailJson.has("status") ? detailJson.getString("status") : null;
-                Long eventTime = detailJson.has("timestamp") ? detailJson.getLong("timestamp") : null;
+                String eventId = queueMessageJson.has(Constants.ID_STR) ? queueMessageJson.getString(Constants.ID_STR) : null;
+                String eventType = detailJson.has(Constants.STATUS_STR) ? detailJson.getString(Constants.STATUS_STR) : null;
+                Long eventTime = detailJson.has(Constants.TIMESTAMP_STR) ? detailJson.getLong(Constants.TIMESTAMP_STR) : null;
                 String data = detailJson.toString();
 
                 if (!StringUtils.isEmpty(eventId)) {
@@ -67,6 +75,7 @@ public class ChimeMediaConvertEventServiceImpl implements ChimeEventService {
             logger.error("Failed to parse the message {}", queueMessageJson, e);
             throw new InternalServerErrorException(Enums.ErrorCode.JSON_PARSING_ERROR, Enums.ErrorCode.JSON_PARSING_ERROR.getName(), e);
         }
+        logger.debug("ChimeMediaConvertEventService::frameChimeMeeting has been completed");
         return chimeMeetingEvent;
     }
 

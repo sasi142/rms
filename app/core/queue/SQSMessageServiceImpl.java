@@ -46,7 +46,7 @@ public class SQSMessageServiceImpl implements SQSMessageService
     private boolean running = false;
 
     @Autowired
-    @Qualifier("defaultQueueMessageHandler")
+    @Qualifier("queueMessageHandlerImpl")
     private QueueMessageHandler messageHandler;
 
     public AmazonSQS amazonSQS;
@@ -74,7 +74,7 @@ public class SQSMessageServiceImpl implements SQSMessageService
 
     @Override
     public String sendMessage(String meetingId,String queueMessage) {
-        logger.info("events sent to sqs queue.Details: meetingId: {}",meetingId);
+        logger.info("events sent to sqs queue for the meetingId: {}",meetingId);
         SendMessageResult sendMessage;
         try {
             logger.info("send message on sqs");
@@ -84,12 +84,12 @@ public class SQSMessageServiceImpl implements SQSMessageService
             SendMessageRequest sendMessageRequest = new SendMessageRequest()
                     .withQueueUrl(url)
                     .withMessageBody(queueMessage)
-              //      .withMessageGroupId("1")
+              //      .withMessageGroupId("1")   //TODO: Unable to setup messageGroupId for the SQS Queue "Chime-sqs"
                     .withMessageAttributes(attributes);
             sendMessage = amazonSQS.sendMessage(sendMessageRequest);
             logger.info("data sent to queue for message Id: "+ sendMessage.getSequenceNumber());
         } catch(Exception ex) {
-            logger.info("failed to send message :"+ex);
+            logger.error("failed to send message :"+ex);
             throw new InternalServerErrorException(Enums.ErrorCode.FAILED_TO_SEND_MESSAGE_ON_QUEUE, Enums.ErrorCode.FAILED_TO_SEND_MESSAGE_ON_QUEUE.getName());
         }
         return sendMessage.getMessageId();
@@ -108,17 +108,17 @@ public class SQSMessageServiceImpl implements SQSMessageService
                         onMessage(message);
                         amazonSQS.deleteMessage(
                             new DeleteMessageRequest().withQueueUrl(url).withReceiptHandle(message.getReceiptHandle()));
-                    } catch (Exception e) {
-                        logger.error("Failed to process the message having id {}", message.getMessageId());
+                    } catch (Exception ex) {
+                        logger.error("Failed to process the message having id {}", message.getMessageId(),ex);
                         throw new InternalServerErrorException(Enums.ErrorCode.FAILED_TO_RECEIVE_MESSAGE_FROM_QUEUE, Enums.ErrorCode.FAILED_TO_RECEIVE_MESSAGE_FROM_QUEUE.getName());
                     }
                 }
-            } catch (Exception e) {
-                logger.warn("Error in fetching messages from SQS Queue. Will sleep and retry again.", e);
+            } catch (Exception ex) {
+                logger.warn("Error in fetching messages from SQS Queue. Will sleep and retry again.", ex);
                 try {
                     Thread.sleep(fetchWaitOnError * 1000);
                 } catch (InterruptedException ie) {
-                    logger.error("Unable to sleep the sqs-listener", e);
+                    logger.error("Unable to sleep the sqs-listener", ie);
                 }
             }
         }
@@ -134,6 +134,4 @@ public class SQSMessageServiceImpl implements SQSMessageService
             logger.warn("Message Body is missing for messageId - {}", message.getMessageId());
         }
     }
-
-
 }

@@ -76,7 +76,7 @@ public class MainController extends Controller {
 
 	public Result healthCheck() {
 		logger.info("healthCheck");
-		String rmsBuildNumber = PropertyUtil.getProperty(Constants.RMS_BUILD_NUMBER);		
+		String rmsBuildNumber = PropertyUtil.getProperty(Constants.RMS_BUILD_NUMBER);
 		ObjectNode node = Json.newObject();
 		node.put("name", hello.BuildInfo.name());
 		node.put("version", hello.BuildInfo.version());
@@ -91,7 +91,7 @@ public class MainController extends Controller {
 		node.put("actorTerminated", isTerminated);
 		return ok(node);
 	}
-	
+
 	public Result shutdown() {
 		logger.info("shut down actor system for testing");
 		RmsActorSystem.get().terminate();

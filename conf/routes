@@ -59,8 +59,8 @@ GET     /rms/memos/:publicUrl/:name        	@controllers.MemoController.getMessa
 POST     /rms/memos/uploadMemoExcel        	@controllers.MemoController.bulkMemoUpload(request:Request, uploadType: String)
 GET     /rms/cache/refresh/:entityType      @controllers.CacheController.refreshCacheByEntityType(entityType: String)
 POST    /rms/tracking-events                @controllers.EventController.sendTrackingEvents(request:Request)
-#POST    /rms/meetings                @controllers.MeetingController.createMeeting(request:Request)
-POST    /rms/meetings/recordings                @controllers.MeetingController.createRecording(request:Request)
+POST    /rms/meetings                       @controllers.MeetingController.createMeeting(request:Request)
+POST    /rms/meetings/recordings            @controllers.MeetingController.createRecording(request:Request)
 
 
 #Video KYC API
@@ -81,10 +81,6 @@ GET     /rms/recordings/group/:groupId/re-process          	 	                @c
 PUT     /rms/recordings/group/:groupId/recording/:recordingId/re-process        @controllers.RecordingController.markForReprocessing(groupId:Long, recordingId:Integer, transcoding:Integer?=-1)
 PUT     /rms/recordings/group/:groupId/re-process          	 	                @controllers.RecordingController.markForReprocessingAllInGroupId(groupId:Long, transcoding:Integer?=-1)
 
-# Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file controllers.Assets.at(path="/public", file)
-GET     /rms/$path<.*>                        @controllers.MainController.catchAll(path)
-
 # Chime Meeting Controller
 POST    /rms/chime-meetings                                                      @controllers.ChimeMeetingController.createMeeting(request:Request)
 PUT     /rms/chime-meetings/:meetingId/end                                       @controllers.ChimeMeetingController.endMeeting(meetingId:Integer)
@@ -93,3 +89,8 @@ POST    /rms/chime-meetings/:meetingId/recordings                               
 PUT     /rms/chime-meetings/recordings/:recordingId/stop                         @controllers.ChimeMeetingController.stopRecording(recordingId:Integer)
 POST    /rms/chime-meetings/events                                               @controllers.ChimeMeetingController.sendEvents(request:Request)
 GET     /rms/chime-meetings/:meetingId/events                                    @controllers.ChimeMeetingController.getEvents(meetingId:Integer)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file controllers.Assets.at(path="/public", file)
+GET     /rms/$path<.*>                        @controllers.MainController.catchAll(path)
+

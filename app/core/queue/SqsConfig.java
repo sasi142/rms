@@ -42,10 +42,9 @@ public class SqsConfig {
     private String awsRegion;
 
     public AmazonSQS amazonSQS() {
-
         AWSCredentialsProvider credentialsProvider = sqsUseIamRole ?
-            InstanceProfileCredentialsProvider.getInstance():
-            new AWSStaticCredentialsProvider(new BasicAWSCredentials(apiKey, apiSecret));
+                InstanceProfileCredentialsProvider.getInstance() :
+                new AWSStaticCredentialsProvider(new BasicAWSCredentials(apiKey, apiSecret));
 
         AmazonSQS sqs;
         if (enableHttpProxySupport) {
@@ -54,17 +53,10 @@ public class SqsConfig {
             clientConfig.setProxyPort(proxyPort);
             clientConfig.setProxyUsername(proxyUserName);
             clientConfig.setProxyPassword(proxyPassword);
-            sqs = AmazonSQSClientBuilder.standard()
-                    .withCredentials(credentialsProvider)
-                    .withClientConfiguration(clientConfig)
-                    .withRegion(Regions.fromName(awsRegion))
-                    .build();
-        }
-        else {
-            sqs = AmazonSQSClientBuilder.standard()
-                    .withCredentials(credentialsProvider)
-                    .withRegion(Regions.fromName(awsRegion))
-                    .build();
+            sqs = AmazonSQSClientBuilder.standard().withCredentials(credentialsProvider).withClientConfiguration(clientConfig)
+                    .withRegion(Regions.fromName(awsRegion)).build();
+        } else {
+            sqs = AmazonSQSClientBuilder.standard().withCredentials(credentialsProvider).withRegion(Regions.fromName(awsRegion)).build();
         }
         return sqs;
     }
